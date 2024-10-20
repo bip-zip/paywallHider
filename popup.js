@@ -49,23 +49,23 @@ selectorsList.addEventListener("click", (e) => {
 });
 
 
-// Save selectors to storage
-chrome.storage.local.set({ selectors: [".wall-overlay", "#paywall-main"] }, () => {
-  if (chrome.runtime.lastError) {
-    console.error("Error saving selectors:", chrome.runtime.lastError.message);
-  } else {
-    console.log("Selectors saved successfully!");
-  }
-});
+// // Save selectors to storage
+// chrome.storage.local.set({ selectors: [".wall-overlay", "#paywall-main"] }, () => {
+//   if (chrome.runtime.lastError) {
+//     console.error("Error saving selectors:", chrome.runtime.lastError.message);
+//   } else {
+//     console.log("Selectors saved successfully!");
+//   }
+// });
 
-// Retrieve selectors from storage
-chrome.storage.local.get(["selectors"], (result) => {
-  if (chrome.runtime.lastError) {
-    console.error("Error retrieving selectors:", chrome.runtime.lastError.message);
-  } else {
-    console.log("Retrieved selectors:", result.selectors);
-  }
-});
+// // Retrieve selectors from storage
+// chrome.storage.local.get(["selectors"], (result) => {
+//   if (chrome.runtime.lastError) {
+//     console.error("Error retrieving selectors:", chrome.runtime.lastError.message);
+//   } else {
+//     console.log("Retrieved selectors:", result.selectors);
+//   }
+// });
 
 
 // Initialize
