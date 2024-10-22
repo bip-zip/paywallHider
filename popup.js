@@ -1,5 +1,6 @@
 const selectorInput = document.getElementById("selector-input");
 const addBtn = document.getElementById("add-btn");
+const fireBtn = document.getElementById("fire-btn");
 const selectorsList = document.getElementById("selectors-list");
 
 // Load stored selectors and update UI
@@ -67,6 +68,47 @@ selectorsList.addEventListener("click", (e) => {
 //   }
 // });
 
+// Inject logic when Fire button is clicked
+fireBtn.addEventListener("click", () => {
+  chrome.storage.local.get(["selectors"], (result) => {
+    const selectors = result.selectors || [];
+    if (selectors.length === 0) {
+      alert("No selectors to inject. Please add some first.");
+      return;
+    }
+
+    // Inject script into the current tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0]?.id) {
+        chrome.scripting.executeScript(
+          {
+            target: { tabId: tabs[0].id },
+            func: (selectors) => {
+              selectors.forEach((selector) => {
+                const element = document.querySelector(selector);
+                if (element) {
+                  element.style.display = "none";
+                  console.log(`Hid element with selector: ${selector}`);
+                } else {
+                  console.log(`Selector not found: ${selector}`);
+                }
+              });
+            },
+            args: [selectors],
+          },
+          () => {
+            if (chrome.runtime.lastError) {
+              console.error("Error injecting JavaScript:", chrome.runtime.lastError.message);
+            } else {
+              console.log("JavaScript injected successfully!");
+              window.close();
+            }
+          }
+        );
+      }
+    });
+  });
+});
 
 // Initialize
 loadSelectors();
