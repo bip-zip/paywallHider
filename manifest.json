@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Economist Bypass",
+  "version": "1.0",
+  "description": "Removes paywall overlays by injecting JavaScript.",
+  "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "Remove Paywall"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons":{
+    "48":"icon.png"
+  }
+}
